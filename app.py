@@ -8,7 +8,8 @@ To plug in real model inference:
   - Each function receives a file-like object (BytesIO or UploadedFile) and should return
     a dict with keys: "label" (str: "Real" or "Fake") and "confidence" (float: 0.0–1.0).
 """
-from predict import predict_image,predict_audio,predict_video,predict_video_audio
+# from predict import predict_image,predict_audio,predict_video,predict_video_audio
+from Inference.Audio import run_inference
 import time
 import streamlit as st
 
@@ -34,7 +35,7 @@ def predict_image(file) -> dict:
     return {"label": "Fake", "confidence": 0.87}
 
 
-def predict_audio(file) -> dict:
+def run_inference(file) -> dict:
     """
     Predict whether an audio clip is real or fake (voice cloning / TTS detection).
 
@@ -257,7 +258,7 @@ def main():
                     result = predict_image(uploaded_file)
 
                 elif input_type_key == "Audio":
-                    result = predict_audio(uploaded_file)
+                    result = run_inference(uploaded_file)
 
                 elif input_type_key == "Video" and not is_video_with_audio:
                     result = predict_video(uploaded_file)
